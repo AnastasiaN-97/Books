@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.example.books.ui.favorites.FavoritesFragment"
+        android:label="@string/favorites"
+        tools:layout="@layout/favorites_fragment" >
+        <action
+            android:id="@+id/action_favoritesFragment_to_myBookInfoFragment"
+            app:destination="@id/myBookInfoFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.books.ui.home.HomeFragment"
+        android:label="@string/home"
+        tools:layout="@layout/home_fragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_moreBooksFragment"
+            app:destination="@id/moreBooksFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_bookInfoFragment"
+            app:destination="@id/bookInfoFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/moreBooksFragment"
+        android:name="com.example.books.ui.moreBooks.MoreBooksFragment"
+        android:label="Жанр"
+        tools:layout="@layout/more_books_fragment" >
+        <action
+            android:id="@+id/action_moreBooksFragment_to_bookInfoFragment"
+            app:destination="@id/bookInfoFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/bookInfoFragment"
+        android:name="com.example.books.ui.details.BookInfoFragment"
+        android:label="@string/about_book"
+        tools:layout="@layout/book_info_fragment" />
+
+    <fragment
+        android:id="@+id/searchBookFragment"
+        android:name="com.example.books.ui.search.SearchBookFragment"
+        android:label="@string/search"
+        tools:layout="@layout/search_book_fragment" >
+        <action
+            android:id="@+id/action_searchBookFragment_to_moreBooksFragment"
+            app:destination="@id/moreBooksFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/myBookInfoFragment"
+        android:name="com.example.books.ui.details.MyBookInfoFragment"
+        android:label="@string/about_book"
+        tools:layout="@layout/my_book_info_fragment" />
+</navigation>
