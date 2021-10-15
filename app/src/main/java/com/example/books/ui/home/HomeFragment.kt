@@ -40,12 +40,5 @@ class HomeFragment : Fragment(R.layout.home_fragment),  HomeAdapter.TicketClickL
         binding.mainRecyclerView.adapter = adapter
         binding.mainRecyclerView.layoutManager = LinearLayoutManager(
             requireContext(), RecyclerView.VERTICAL, false)
-
-        /*binding.btnMap.setOnClickListener {
-            val action = HomeFragmentDirections.toDetails(2)
-            findNavController().navigate(action)
-        }*/
-
     }
-
 }

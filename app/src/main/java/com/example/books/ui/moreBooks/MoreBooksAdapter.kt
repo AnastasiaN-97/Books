@@ -8,7 +8,7 @@ import com.example.books.fake.Book
 
 class MoreBooksAdapter (var books: List<Book>): RecyclerView.Adapter<MoreBooksAdapter.MoreBooksHolder>() {
 
-        var clickListener: MoreBooksAdapter.TicketClickListener? = null
+        var clickListener: TicketClickListener? = null
 
         interface TicketClickListener{
             fun onTicketClick()
@@ -26,10 +26,10 @@ class MoreBooksAdapter (var books: List<Book>): RecyclerView.Adapter<MoreBooksAd
                 false
             )
 
-            return MoreBooksAdapter.MoreBooksHolder(binding, clickListener)
+            return MoreBooksHolder(binding, clickListener)
         }
 
-        override fun onBindViewHolder(holder: MoreBooksAdapter.MoreBooksHolder, position: Int) {
+        override fun onBindViewHolder(holder: MoreBooksHolder, position: Int) {
             holder.bind(books[position])
         }
 

@@ -3,10 +3,12 @@ package com.example.books.ui.home
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.books.databinding.BookItemBinding
 import com.example.books.databinding.GenreItemBinding
+import com.example.books.fake.Book
 import com.example.books.fake.Genre
 
-class HomeAdapter(var genres: List<Genre>): RecyclerView.Adapter<HomeAdapter.HomeHolder>() {
+class ChildAdapter (var books: List<Book>): RecyclerView.Adapter<ChildAdapter.ChildHolder>() {
 
     var clickListener: TicketClickListener? = null
 
@@ -15,34 +17,35 @@ class HomeAdapter(var genres: List<Genre>): RecyclerView.Adapter<HomeAdapter.Hom
     }
 
     override fun getItemCount(): Int {
-        return genres.size
+        return books.size
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChildHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = GenreItemBinding.inflate(
+        val binding = BookItemBinding.inflate(
             inflater,
             parent,
             false
         )
 
-        return HomeHolder(binding, clickListener,)
+        return ChildAdapter.ChildHolder(binding, clickListener)
     }
 
-    override fun onBindViewHolder(holder: HomeHolder, position: Int) {
-        holder.bind(genres[position])
+    override fun onBindViewHolder(holder: ChildHolder, position: Int) {
+        holder.bind(books[position])
     }
 
-    class HomeHolder(
-        private val binding: GenreItemBinding,
+    class ChildHolder(
+        private val binding: BookItemBinding,
         private val listener: TicketClickListener?
     )
         : RecyclerView.ViewHolder(binding.root) {
-        fun bind(genre: Genre) {
+        fun bind(books: Book) {
             with(binding) {
+                textView2.text = books.author
+                textView.text  = books.title
 
-                genreText.text = genre.genre
-                genreCard.setOnClickListener {
+                bookCard.setOnClickListener {
                     listener?.onTicketClick()
                 }
             }

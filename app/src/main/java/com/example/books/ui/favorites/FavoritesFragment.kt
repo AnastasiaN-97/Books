@@ -1,32 +1,43 @@
 package com.example.books.ui.favorites
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.books.R
+import com.example.books.databinding.FavoritesFragmentBinding
+import com.example.books.fake.bookData
 
-class FavoritesFragment : Fragment() {
+class FavoritesFragment : Fragment(R.layout.favorites_fragment), FavoritesAdapter.TicketClickListener  {
 
-    companion object {
-        fun newInstance() = FavoritesFragment()
+    private lateinit var binding: FavoritesFragmentBinding
+
+    override fun onTicketClick() {
+        val action = FavoritesFragmentDirections.actionFavoritesFragmentToMyBookInfoFragment()
+        findNavController().navigate(action)
     }
-
-    private lateinit var viewModel: FavoritesViewModel
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.favorites_fragment, container, false)
+        binding = FavoritesFragmentBinding.inflate(
+            inflater,
+            container,
+            false)
+        return binding.root
     }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(FavoritesViewModel::class.java)
-        // TODO: Use the ViewModel
+        val adapter = FavoritesAdapter(bookData)
+        adapter.clickListener = this
+        binding.res.adapter = adapter
+        binding.res.layoutManager = GridLayoutManager(requireContext(), 3, RecyclerView.VERTICAL, false)
     }
-
 }

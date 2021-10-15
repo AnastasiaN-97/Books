@@ -1,6 +1,5 @@
 package com.example.books.ui.moreBooks
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,12 +9,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.books.R
-import com.example.books.databinding.HomeFragmentBinding
 import com.example.books.databinding.MoreBooksFragmentBinding
 import com.example.books.fake.bookData
-import com.example.books.fake.genre
-import com.example.books.ui.home.HomeAdapter
-import com.example.books.ui.home.HomeFragmentDirections
 
 class MoreBooksFragment : Fragment(R.layout.more_books_fragment),  MoreBooksAdapter.TicketClickListener  {
 
@@ -45,12 +40,5 @@ class MoreBooksFragment : Fragment(R.layout.more_books_fragment),  MoreBooksAdap
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(
             requireContext(), RecyclerView.VERTICAL, false)
-
-        /*binding.btnMap.setOnClickListener {
-            val action = HomeFragmentDirections.toDetails(2)
-            findNavController().navigate(action)
-        }*/
-
     }
-
 }
