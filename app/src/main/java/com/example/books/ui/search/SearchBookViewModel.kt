@@ -28,10 +28,19 @@ class SearchBookViewModel : ViewModel() {
 //        }
 //    }
 
-    fun getBooks2(search: String) = liveData(Dispatchers.IO) {
+   /* fun getBooks2(search: String) = liveData(Dispatchers.IO) {
         emit(Resource.loading(data = null))
         try {
             emit(Resource.success(data = mainRepository.getBooks2(search)))
+        } catch (exception: Exception) {
+            emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
+        }
+    }*/
+
+    fun getBooksTest(search: String) = liveData(Dispatchers.IO) {
+        emit(Resource.loading(data = null))
+        try {
+            emit(Resource.success(data = mainRepository.getBooksTest(search)))
         } catch (exception: Exception) {
             emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
         }

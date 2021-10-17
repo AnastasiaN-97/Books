@@ -5,38 +5,32 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.books.data.model.VolumeInfo
+import com.example.books.data.model.Book
+import com.example.books.data.model.Item
 import com.example.books.databinding.BookItemForMoreFragmentBinding
 
 
 
 
-class SearchBookAdapter(private val books: MutableList<com.example.books.data.model.Response>) : RecyclerView.Adapter<SearchBookAdapter.DataViewHolder>() {
+class SearchBookAdapter(private val responses: MutableList<Item>) : RecyclerView.Adapter<SearchBookAdapter.DataViewHolder>() {
 
-    var clickListener: UserClickListener? = null
+    class DataViewHolder(private val binding: BookItemForMoreFragmentBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    interface UserClickListener{
-        fun onUserClick(userId: String)
-    }
-
-
-    class DataViewHolder(private val binding: BookItemForMoreFragmentBinding,
-                         private val listener: UserClickListener?) : RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(book: com.example.books.data.model.Response) {
+        fun bind(response: Item) {
             with(binding) {
-                textView.text = book.toString()
-                Log.d("mytag2", book.kind)
-               // textView2.text = book.author
-                /*textView2.text = book.author
+                textView.text = response.volumeInfo.title
+                val size = if (response.volumeInfo.authors != null) response.volumeInfo.authors.size else -1
+                var k = 0
 
+                while (size>k){
+                    textView2.text = response.volumeInfo.authors!![0] + " "
+                    k++
+                }
 
+                val img = if (response.volumeInfo.imageLinks?.thumbnail != null) response.volumeInfo.imageLinks.thumbnail.replace("http", "https") else "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Keen_Bild_Taxon.svg/1200px-Keen_Bild_Taxon.svg.png"
                 Glide.with(imageView.context)
-                    .load(book.cover)
-                    .into(imageView)*/
-                /*container.setOnClickListener {
-                    listener?.onUserClick(user.id)
-                }*/
+                    .load(img)
+                    .into(imageView)
             }
         }
     }
@@ -50,17 +44,17 @@ class SearchBookAdapter(private val books: MutableList<com.example.books.data.mo
             false
         )
 
-        return DataViewHolder(binding, clickListener)
+        return DataViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = books.size
+    override fun getItemCount(): Int = responses.size
 
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
-        holder.bind(books[position])
+        holder.bind(responses[position])
     }
 
-    fun addBooks(books: List<com.example.books.data.model.Response>) {
-        this.books.apply {
+    fun addBooks(books: List<Item>) {
+        this.responses.apply {
             clear()
             addAll(books)
         }

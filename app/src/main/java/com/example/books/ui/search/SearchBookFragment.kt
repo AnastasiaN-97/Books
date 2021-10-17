@@ -8,13 +8,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.books.R
+import com.example.books.data.api.ApiService
+import com.example.books.data.model.Book
+import com.example.books.data.model.Item
 import com.example.books.databinding.SearchBookFragmentBinding
+import com.example.books.utils.Resource
 import com.example.books.utils.Status
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class SearchBookFragment : Fragment(R.layout.search_book_fragment) {
 
@@ -22,11 +34,7 @@ class SearchBookFragment : Fragment(R.layout.search_book_fragment) {
     private lateinit var adapter: SearchBookAdapter
     private lateinit var recyclerView: RecyclerView
     private lateinit var binding: SearchBookFragmentBinding
-/*
-    override fun onUserClick(userId: String) {
-        val action = MainFragmentDirections.toUserDetail(userId)
-        findNavController().navigate(action)
-    }*/
+
 
 
     override fun onCreateView(
@@ -45,11 +53,10 @@ class SearchBookFragment : Fragment(R.layout.search_book_fragment) {
 
         binding.searchBtn.setOnClickListener{
             val search = binding.searchEdit.text.toString()
-            Log.d("mytag", search)
             setupUI()
             setupObservers(search)
-
         }
+
     }
 
     private fun setupUI() {
@@ -65,13 +72,11 @@ class SearchBookFragment : Fragment(R.layout.search_book_fragment) {
     }
 
     private fun setupObservers(search: String) {
-
-        viewModel.getBooks2(search).observe(viewLifecycleOwner) { resource ->
+        viewModel.getBooksTest(search).observe(viewLifecycleOwner) { resource ->
             when (resource.status) {
                 Status.SUCCESS -> {
                     recyclerView.visibility = View.VISIBLE
-                    resource.data?.let { test -> adapter.addBooks(test)
-                    }
+                    resource.data!!.items.let{ test -> adapter.addBooks(test) }
                 }
                 Status.ERROR -> {
                     recyclerView.visibility = View.VISIBLE

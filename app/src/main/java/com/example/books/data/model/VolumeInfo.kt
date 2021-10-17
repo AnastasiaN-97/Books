@@ -1,12 +1,13 @@
 package com.example.books.data.model
 
+import com.google.gson.annotations.SerializedName
+
+
 data class VolumeInfo(
-    var authors: List<String> = listOf(),
-    var categories: List<String> = listOf(),
-    var description: String = "",
-    var imageLinks: ImageLinks = ImageLinks(),
-    var language: String = "",
-    var publishedDate: String = "",
-    var publisher: String = "",
-    var title: String = ""
+    val title: String?,
+    val authors: List<String>?,
+    @SerializedName("description") val content: String?,
+    @SerializedName("publisher")
+    val publisher: String,
+    val imageLinks: ImageLinks?
 )
