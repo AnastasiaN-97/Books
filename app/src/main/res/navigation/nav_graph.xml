@@ -42,7 +42,12 @@
         android:id="@+id/bookInfoFragment"
         android:name="com.example.books.ui.details.BookInfoFragment"
         android:label="@string/about_book"
-        tools:layout="@layout/book_info_fragment" />
+        tools:layout="@layout/book_info_fragment">
+        <argument
+            android:name="bookId"
+            app:argType="string"
+            app:nullable="false"/>
+    </fragment>
 
     <fragment
         android:id="@+id/searchBookFragment"
@@ -50,8 +55,8 @@
         android:label="@string/search"
         tools:layout="@layout/search_book_fragment" >
         <action
-            android:id="@+id/action_searchBookFragment_to_moreBooksFragment"
-            app:destination="@id/moreBooksFragment" />
+            android:id="@+id/action_searchBookFragment_to_bookInfoFragment"
+            app:destination="@id/bookInfoFragment" />
     </fragment>
 
     <fragment

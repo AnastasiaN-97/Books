@@ -12,14 +12,14 @@ import com.example.books.R
 import com.example.books.databinding.MoreBooksFragmentBinding
 import com.example.books.fake.bookData
 
-class MoreBooksFragment : Fragment(R.layout.more_books_fragment),  MoreBooksAdapter.TicketClickListener  {
+class MoreBooksFragment : Fragment(R.layout.more_books_fragment)  {
 
     private lateinit var binding: MoreBooksFragmentBinding
 
-    override fun onTicketClick() {
-        val action = MoreBooksFragmentDirections.actionMoreBooksFragmentToBookInfoFragment()
+    /*override fun onBookClick() {
+        val action = MoreBooksFragmentDirections.actionMoreBooksFragmentToBookInfoFragment(bookId = "3")
         findNavController().navigate(action)
-    }
+    }*/
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,7 +36,7 @@ class MoreBooksFragment : Fragment(R.layout.more_books_fragment),  MoreBooksAdap
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = MoreBooksAdapter(bookData)
-        adapter.clickListener = this
+        //adapter.clickListener = this
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(
             requireContext(), RecyclerView.VERTICAL, false)

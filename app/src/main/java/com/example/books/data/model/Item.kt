@@ -6,7 +6,6 @@ import com.google.gson.annotations.SerializedName
 data class Item(
     @SerializedName("volumeInfo")
     val volumeInfo: VolumeInfo,
-
     @SerializedName("categories")
-    val genre: Genre?
+    val genre: Genre?,
 )

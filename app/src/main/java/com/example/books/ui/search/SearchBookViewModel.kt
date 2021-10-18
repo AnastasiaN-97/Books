@@ -17,25 +17,6 @@ class SearchBookViewModel : ViewModel() {
 
     private val apiHelper = ApiHelper(RetrofitBuilder.apiService)
     private val mainRepository: MainRepository = MainRepository(apiHelper)
-    //private val myResponse: MutableLiveData<Response<Book>> = MutableLiveData()
-
-//    fun getBooks(search: String) = liveData(Dispatchers.IO) {
-//        emit(Resource.loading(data = null))
-//        try {
-//            emit(Resource.success(data = mainRepository.getBooks(search)))
-//        } catch (exception: Exception) {
-//            emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
-//        }
-//    }
-
-   /* fun getBooks2(search: String) = liveData(Dispatchers.IO) {
-        emit(Resource.loading(data = null))
-        try {
-            emit(Resource.success(data = mainRepository.getBooks2(search)))
-        } catch (exception: Exception) {
-            emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
-        }
-    }*/
 
     fun getBooksTest(search: String) = liveData(Dispatchers.IO) {
         emit(Resource.loading(data = null))

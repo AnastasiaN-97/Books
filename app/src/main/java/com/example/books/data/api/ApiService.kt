@@ -5,10 +5,6 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ApiService {
-
-   /* @GET("volumes?")
-    suspend fun getBooks(@Query("q") search: String): List<Book>*/
-
     @GET("volumes?")
     suspend fun getBooksTest(@Query("q") search: String): Book
 }

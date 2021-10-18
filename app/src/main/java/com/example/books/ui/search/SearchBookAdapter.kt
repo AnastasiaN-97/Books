@@ -14,7 +14,13 @@ import com.example.books.databinding.BookItemForMoreFragmentBinding
 
 class SearchBookAdapter(private val responses: MutableList<Item>) : RecyclerView.Adapter<SearchBookAdapter.DataViewHolder>() {
 
-    class DataViewHolder(private val binding: BookItemForMoreFragmentBinding) : RecyclerView.ViewHolder(binding.root) {
+    var clickListener: BookClickListener? = null
+
+    interface BookClickListener{
+        fun onBookClick(id: String)
+    }
+
+    class DataViewHolder(private val binding: BookItemForMoreFragmentBinding,  private val listener: BookClickListener?) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(response: Item) {
             with(binding) {
@@ -31,6 +37,11 @@ class SearchBookAdapter(private val responses: MutableList<Item>) : RecyclerView
                 Glide.with(imageView.context)
                     .load(img)
                     .into(imageView)
+
+                moreBooks.setOnClickListener{
+                    listener?.onBookClick("isbn:"+response.volumeInfo.isbn[0].identifier)
+                    Log.d("mytag", response.volumeInfo.isbn[0].identifier)
+                }
             }
         }
     }
@@ -44,7 +55,7 @@ class SearchBookAdapter(private val responses: MutableList<Item>) : RecyclerView
             false
         )
 
-        return DataViewHolder(binding)
+        return DataViewHolder(binding, clickListener)
     }
 
     override fun getItemCount(): Int = responses.size

@@ -1,34 +1,23 @@
 package com.example.books.ui.search
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.Toast
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.books.R
-import com.example.books.data.api.ApiService
-import com.example.books.data.model.Book
-import com.example.books.data.model.Item
 import com.example.books.databinding.SearchBookFragmentBinding
-import com.example.books.utils.Resource
 import com.example.books.utils.Status
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
-class SearchBookFragment : Fragment(R.layout.search_book_fragment) {
+
+class SearchBookFragment : Fragment(R.layout.search_book_fragment), SearchBookAdapter.BookClickListener {
 
     private lateinit var viewModel: SearchBookViewModel
     private lateinit var adapter: SearchBookAdapter
@@ -36,6 +25,10 @@ class SearchBookFragment : Fragment(R.layout.search_book_fragment) {
     private lateinit var binding: SearchBookFragmentBinding
 
 
+    override fun onBookClick(bookId: String) {
+        val action = SearchBookFragmentDirections.actionSearchBookFragmentToBookInfoFragment(bookId)
+        findNavController().navigate(action)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -76,7 +69,8 @@ class SearchBookFragment : Fragment(R.layout.search_book_fragment) {
             when (resource.status) {
                 Status.SUCCESS -> {
                     recyclerView.visibility = View.VISIBLE
-                    resource.data!!.items.let{ test -> adapter.addBooks(test) }
+                    resource.data!!.items.let{ test -> adapter.addBooks(test)}
+                    adapter.clickListener = this
                 }
                 Status.ERROR -> {
                     recyclerView.visibility = View.VISIBLE
