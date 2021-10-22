@@ -4,4 +4,5 @@
     <string name="favorites">Избранное</string>
     <string name="home">Главная</string>
     <string name="about_book">О книге</string>
+    <string name="alternate_image">https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Keen_Bild_Taxon.svg/1200px-Keen_Bild_Taxon.svg.png</string>
 </resources>

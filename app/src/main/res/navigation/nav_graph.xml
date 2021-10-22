@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/searchBookFragment">
 
     <fragment
         android:id="@+id/favoritesFragment"
@@ -11,30 +11,7 @@
         android:label="@string/favorites"
         tools:layout="@layout/favorites_fragment" >
         <action
-            android:id="@+id/action_favoritesFragment_to_myBookInfoFragment"
-            app:destination="@id/myBookInfoFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.example.books.ui.home.HomeFragment"
-        android:label="@string/home"
-        tools:layout="@layout/home_fragment" >
-        <action
-            android:id="@+id/action_homeFragment_to_moreBooksFragment"
-            app:destination="@id/moreBooksFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_bookInfoFragment"
-            app:destination="@id/bookInfoFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/moreBooksFragment"
-        android:name="com.example.books.ui.moreBooks.MoreBooksFragment"
-        android:label="Жанр"
-        tools:layout="@layout/more_books_fragment" >
-        <action
-            android:id="@+id/action_moreBooksFragment_to_bookInfoFragment"
+            android:id="@+id/action_favoritesFragment_to_bookInfoFragment"
             app:destination="@id/bookInfoFragment" />
     </fragment>
 
@@ -44,7 +21,27 @@
         android:label="@string/about_book"
         tools:layout="@layout/book_info_fragment">
         <argument
-            android:name="bookId"
+            android:name="bookid"
+            app:argType="string"
+            app:nullable="false"/>
+        <argument
+            android:name="bookTitle"
+            app:argType="string"
+            app:nullable="false"/>
+        <argument
+            android:name="bookAuthor"
+            app:argType="string"
+            app:nullable="false"/>
+        <argument
+            android:name="bookImage"
+            app:argType="string"
+            app:nullable="false"/>
+        <argument
+            android:name="bookContent"
+            app:argType="string"
+            app:nullable="false"/>
+        <argument
+            android:name="bookInfo"
             app:argType="string"
             app:nullable="false"/>
     </fragment>
@@ -59,9 +56,4 @@
             app:destination="@id/bookInfoFragment" />
     </fragment>
 
-    <fragment
-        android:id="@+id/myBookInfoFragment"
-        android:name="com.example.books.ui.details.MyBookInfoFragment"
-        android:label="@string/about_book"
-        tools:layout="@layout/my_book_info_fragment" />
 </navigation>

@@ -5,19 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.books.R
 import com.example.books.databinding.SearchBookFragmentBinding
 import com.example.books.utils.Status
+import com.google.android.material.snackbar.Snackbar
 
-
-class SearchBookFragment : Fragment(R.layout.search_book_fragment), SearchBookAdapter.BookClickListener {
+class SearchBookFragment : Fragment(com.example.books.R.layout.search_book_fragment), SearchBookAdapter.BookClickListener {
 
     private lateinit var viewModel: SearchBookViewModel
     private lateinit var adapter: SearchBookAdapter
@@ -25,8 +24,10 @@ class SearchBookFragment : Fragment(R.layout.search_book_fragment), SearchBookAd
     private lateinit var binding: SearchBookFragmentBinding
 
 
-    override fun onBookClick(bookId: String) {
-        val action = SearchBookFragmentDirections.actionSearchBookFragmentToBookInfoFragment(bookId)
+    override fun onBookClick(bokId: String?, bookTitle: String, bookAuthor: String,
+                             bookImage: String, bookContent: String, bookInfo: String) {
+        val action = SearchBookFragmentDirections.
+        actionSearchBookFragmentToBookInfoFragment(bokId!!, bookTitle, bookAuthor, bookImage,bookContent, bookInfo)
         findNavController().navigate(action)
     }
 
@@ -44,12 +45,26 @@ class SearchBookFragment : Fragment(R.layout.search_book_fragment), SearchBookAd
         viewModel = ViewModelProvider(this).get(SearchBookViewModel::class.java)
         recyclerView = binding.moreRecyclerView
 
-        binding.searchBtn.setOnClickListener{
-            val search = binding.searchEdit.text.toString()
-            setupUI()
-            setupObservers(search)
-        }
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+            android.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(search: String?): Boolean {
+                if(search != null && search.isNotEmpty())
+                {
+                    setupUI()
+                    setupObservers(search)
+                }
 
+                return false
+            }
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if(newText != null && newText.isNotEmpty())
+                {
+                    setupUI()
+                    setupObservers(newText)
+                }
+                return false
+            }
+        })
     }
 
     private fun setupUI() {
@@ -73,8 +88,9 @@ class SearchBookFragment : Fragment(R.layout.search_book_fragment), SearchBookAd
                     adapter.clickListener = this
                 }
                 Status.ERROR -> {
-                    recyclerView.visibility = View.VISIBLE
-                    Toast.makeText(context, resource.message, Toast.LENGTH_LONG).show()
+                    recyclerView.visibility = View.GONE
+                    //Snackbar.make(this,"NoInternet", Snackbar.LENGTH_LONG)
+                    Toast.makeText(context, "Проверьте соединение с сетью", Toast.LENGTH_LONG).show()
                 }
                 Status.LOADING -> {
                     recyclerView.visibility = View.GONE

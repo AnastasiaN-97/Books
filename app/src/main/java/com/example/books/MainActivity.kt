@@ -1,5 +1,6 @@
 package com.example.books
 
+import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
@@ -20,9 +21,10 @@ class MainActivity : AppCompatActivity() {
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHost) as NavHostFragment
         val navController = navHostFragment.navController
-        val appBarConfiguration = AppBarConfiguration(setOf(R.id.homeFragment, R.id.searchBookFragment, R.id.favoritesFragment))
+        val appBarConfiguration = AppBarConfiguration(setOf(R.id.searchBookFragment, R.id.favoritesFragment))
 
-        binding.toolbar.setupWithNavController(navController, appBarConfiguration)
+        //binding.toolbar.setupWithNavController(navController, appBarConfiguration)
+        //binding.toolbar.setBackgroundColor(#616161)
         binding.navView.setupWithNavController(navController)
     }
 }

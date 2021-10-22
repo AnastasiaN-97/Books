@@ -1,22 +1,31 @@
 package com.example.books.ui.search
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
-import androidx.lifecycle.viewModelScope
+import android.app.Application
+import androidx.lifecycle.*
+import com.example.books.data.repository.BookRepository
 import com.example.books.data.api.ApiHelper
 import com.example.books.data.api.RetrofitBuilder
-import com.example.books.data.model.Book
+import com.example.books.data.dataBase.AppDatabase
+import com.example.books.data.dataBase.BookDB
 import com.example.books.data.repository.MainRepository
 import kotlinx.coroutines.Dispatchers
 import com.example.books.utils.Resource
+import kotlinx.coroutines.launch
 
-import retrofit2.Response
-
-class SearchBookViewModel : ViewModel() {
+class SearchBookViewModel(application: Application): AndroidViewModel(application){
 
     private val apiHelper = ApiHelper(RetrofitBuilder.apiService)
     private val mainRepository: MainRepository = MainRepository(apiHelper)
+    private val repository: BookRepository
+    val readAllData: LiveData<List<BookDB>>
+
+    init {
+        val bookDao = AppDatabase.getDatabase(
+            application
+        ).bookDao()
+        repository = BookRepository(bookDao)
+        readAllData = repository.readAllData
+    }
 
     fun getBooksTest(search: String) = liveData(Dispatchers.IO) {
         emit(Resource.loading(data = null))
@@ -25,5 +34,21 @@ class SearchBookViewModel : ViewModel() {
         } catch (exception: Exception) {
             emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
         }
+    }
+
+    fun insert(book: BookDB){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.insert(book)
+        }
+    }
+
+    fun deleteBook(book: BookDB){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteBook(book)
+        }
+    }
+
+    fun isFavorite(id: String, bookTitle: String) = liveData<Boolean> {
+        repository.isFavorite(id, bookTitle)
     }
 }

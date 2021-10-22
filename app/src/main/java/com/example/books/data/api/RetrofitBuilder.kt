@@ -6,11 +6,11 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitBuilder {
-   val interceptor = HttpLoggingInterceptor().apply {
+   private val interceptor = HttpLoggingInterceptor().apply {
        level = HttpLoggingInterceptor.Level.BODY
    }
 
-    val client  = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    private val client  = OkHttpClient.Builder().addInterceptor(interceptor).build()
 
     private const val BASE_URL = "https://www.googleapis.com/books/v1/"
 
